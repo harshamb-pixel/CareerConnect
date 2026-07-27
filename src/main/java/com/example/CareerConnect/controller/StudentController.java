@@ -1,11 +1,11 @@
-package com.example.jobportal.controller;
+package com.example.CareerConnect.controller;
 
-import com.example.jobportal.entity.Application;
-import com.example.jobportal.entity.Job;
-import com.example.jobportal.entity.User;
-import com.example.jobportal.service.ApplicationService;
-import com.example.jobportal.service.JobService;
-import com.example.jobportal.service.UserService;
+import com.example.CareerConnect.entity.Application;
+import com.example.CareerConnect.entity.Job;
+import com.example.CareerConnect.entity.User;
+import com.example.CareerConnect.service.ApplicationService;
+import com.example.CareerConnect.service.JobService;
+import com.example.CareerConnect.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;

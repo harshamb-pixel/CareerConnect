@@ -1,7 +1,7 @@
-package com.example.jobportal.controller;
+package com.example.CareerConnect.controller;
 
-import com.example.jobportal.entity.Job;
-import com.example.jobportal.service.JobService;
+import com.example.CareerConnect.entity.Job;
+import com.example.CareerConnect.service.JobService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

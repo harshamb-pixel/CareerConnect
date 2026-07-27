@@ -1,6 +1,6 @@
-package com.example.jobportal.repository;
+package com.example.CareerConnect.repository;
 
-import com.example.jobportal.entity.User;
+import com.example.CareerConnect.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {

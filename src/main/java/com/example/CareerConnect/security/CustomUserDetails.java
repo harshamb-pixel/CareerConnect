@@ -1,6 +1,6 @@
-package com.example.jobportal.security;
+package com.example.CareerConnect.security;
 
-import com.example.jobportal.entity.User;
+import com.example.CareerConnect.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

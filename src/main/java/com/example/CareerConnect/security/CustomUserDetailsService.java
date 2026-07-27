@@ -1,7 +1,7 @@
-package com.example.jobportal.security;
+package com.example.CareerConnect.security;
 
-import com.example.jobportal.entity.User;
-import com.example.jobportal.repository.UserRepository;
+import com.example.CareerConnect.entity.User;
+import com.example.CareerConnect.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

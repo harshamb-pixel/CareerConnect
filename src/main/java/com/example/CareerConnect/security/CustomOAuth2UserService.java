@@ -1,7 +1,7 @@
-package com.example.jobportal.security;
+package com.example.CareerConnect.security;
 
-import com.example.jobportal.entity.User;
-import com.example.jobportal.repository.UserRepository;
+import com.example.CareerConnect.entity.User;
+import com.example.CareerConnect.repository.UserRepository;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.user.OAuth2User;

@@ -1,4 +1,4 @@
-package com.example.jobportal;
+package com.example.CareerConnect;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

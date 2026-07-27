@@ -1,4 +1,4 @@
-package com.example.jobportal.security;
+package com.example.CareerConnect.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

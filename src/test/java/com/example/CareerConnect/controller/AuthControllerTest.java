@@ -1,8 +1,8 @@
-package com.example.jobportal.controller;
+package com.example.CareerConnect.controller;
 
-import com.example.jobportal.entity.User;
-import com.example.jobportal.service.EmailService;
-import com.example.jobportal.service.UserService;
+import com.example.CareerConnect.entity.User;
+import com.example.CareerConnect.service.EmailService;
+import com.example.CareerConnect.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;

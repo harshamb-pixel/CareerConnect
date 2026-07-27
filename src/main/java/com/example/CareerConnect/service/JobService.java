@@ -1,7 +1,7 @@
-package com.example.jobportal.service;
+package com.example.CareerConnect.service;
 
-import com.example.jobportal.entity.Job;
-import com.example.jobportal.repository.JobRepository;
+import com.example.CareerConnect.entity.Job;
+import com.example.CareerConnect.repository.JobRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

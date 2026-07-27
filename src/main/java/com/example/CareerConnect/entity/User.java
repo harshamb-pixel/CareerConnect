@@ -1,4 +1,4 @@
-package com.example.jobportal.entity;
+package com.example.CareerConnect.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

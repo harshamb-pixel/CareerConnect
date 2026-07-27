@@ -1,7 +1,7 @@
-package com.example.jobportal.config;
+package com.example.CareerConnect.config;
 
-import com.example.jobportal.entity.User;
-import com.example.jobportal.service.UserService;
+import com.example.CareerConnect.entity.User;
+import com.example.CareerConnect.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
