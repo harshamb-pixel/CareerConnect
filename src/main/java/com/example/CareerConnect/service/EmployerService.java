@@ -1,10 +1,10 @@
-package com.example.jobportal.service;
+package com.example.CareerConnect.service;
 
-import com.example.jobportal.entity.Application;
-import com.example.jobportal.entity.Job;
-import com.example.jobportal.exception.ResourceNotFoundException;
-import com.example.jobportal.repository.ApplicationRepository;
-import com.example.jobportal.repository.JobRepository;
+import com.example.CareerConnect.entity.Application;
+import com.example.CareerConnect.entity.Job;
+import com.example.CareerConnect.exception.ResourceNotFoundException;
+import com.example.CareerConnect.repository.ApplicationRepository;
+import com.example.CareerConnect.repository.JobRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

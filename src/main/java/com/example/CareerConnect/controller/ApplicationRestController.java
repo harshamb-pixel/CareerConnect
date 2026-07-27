@@ -1,7 +1,7 @@
-package com.example.jobportal.controller;
+package com.example.CareerConnect.controller;
 
-import com.example.jobportal.dto.EmailRequest;
-import com.example.jobportal.service.EmailService;
+import com.example.CareerConnect.dto.EmailRequest;
+import com.example.CareerConnect.service.EmailService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +14,9 @@ import java.util.Map;
 public class ApplicationRestController {
 
     private final EmailService emailService;
-    private final com.example.jobportal.repository.JobRepository jobRepository;
+    private final com.example.CareerConnect.repository.JobRepository jobRepository;
 
-    public ApplicationRestController(EmailService emailService, com.example.jobportal.repository.JobRepository jobRepository) {
+    public ApplicationRestController(EmailService emailService, com.example.CareerConnect.repository.JobRepository jobRepository) {
         this.emailService = emailService;
         this.jobRepository = jobRepository;
     }
@@ -26,10 +26,10 @@ public class ApplicationRestController {
         Map<String, String> response = new HashMap<>();
         try {
             // Find job by title (jobRole in request)
-            com.example.jobportal.entity.Job job = jobRepository.findByTitle(request.getJobRole());
+            com.example.CareerConnect.entity.Job job = jobRepository.findByTitle(request.getJobRole());
             if (job == null) {
                 // Fallback for demo: create a partial job if not found in DB
-                job = new com.example.jobportal.entity.Job();
+                job = new com.example.CareerConnect.entity.Job();
                 job.setTitle(request.getJobRole());
                 job.setCategory("N/A");
                 job.setLocation("N/A");

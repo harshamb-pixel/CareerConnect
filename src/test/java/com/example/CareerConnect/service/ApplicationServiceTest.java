@@ -1,7 +1,7 @@
-package com.example.jobportal.service;
+package com.example.CareerConnect.service;
 
-import com.example.jobportal.entity.Application;
-import com.example.jobportal.repository.ApplicationRepository;
+import com.example.CareerConnect.entity.Application;
+import com.example.CareerConnect.repository.ApplicationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

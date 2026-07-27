@@ -1,7 +1,7 @@
-package com.example.jobportal.controller;
+package com.example.CareerConnect.controller;
 
-import com.example.jobportal.entity.User;
-import com.example.jobportal.service.UserService;
+import com.example.CareerConnect.entity.User;
+import com.example.CareerConnect.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.example.jobportal.service.EmailService;
+import com.example.CareerConnect.service.EmailService;
 import java.util.Random;
 import java.util.UUID;
 import java.time.LocalDateTime;

@@ -1,6 +1,6 @@
-package com.example.jobportal.repository;
+package com.example.CareerConnect.repository;
 
-import com.example.jobportal.entity.Job;
+import com.example.CareerConnect.entity.Job;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

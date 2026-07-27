@@ -1,4 +1,4 @@
-package com.example.jobportal;
+package com.example.CareerConnect;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

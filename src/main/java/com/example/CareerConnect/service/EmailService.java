@@ -1,4 +1,4 @@
-package com.example.jobportal.service;
+package com.example.CareerConnect.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -69,7 +69,7 @@ public class EmailService {
         }
     }
 
-    public void sendJobStatusEmail(String to, String candidateName, com.example.jobportal.entity.Job job, String status) {
+    public void sendJobStatusEmail(String to, String candidateName, com.example.CareerConnect.entity.Job job, String status) {
         Context context = new Context();
         context.setVariable("candidateName", candidateName);
         context.setVariable("jobTitle", job.getTitle());
@@ -104,7 +104,7 @@ public class EmailService {
     // Legacy methods updated to be safe (though ideally called with Job object)
     public void sendShortlistNotification(String to, String studentName, String jobTitle, String employerName) {
         // This is a fallback; ideally use the new Job-based method
-        com.example.jobportal.entity.Job dummyJob = new com.example.jobportal.entity.Job();
+        com.example.CareerConnect.entity.Job dummyJob = new com.example.CareerConnect.entity.Job();
         dummyJob.setTitle(jobTitle);
         dummyJob.setCategory("N/A");
         dummyJob.setLocation("N/A");
@@ -116,7 +116,7 @@ public class EmailService {
     }
 
     public void sendRejectionNotification(String to, String studentName, String jobTitle, String employerName) {
-        com.example.jobportal.entity.Job dummyJob = new com.example.jobportal.entity.Job();
+        com.example.CareerConnect.entity.Job dummyJob = new com.example.CareerConnect.entity.Job();
         dummyJob.setTitle(jobTitle);
         dummyJob.setCategory("N/A");
         dummyJob.setLocation("N/A");

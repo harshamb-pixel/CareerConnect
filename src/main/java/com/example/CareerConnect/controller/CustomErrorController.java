@@ -1,4 +1,4 @@
-package com.example.jobportal.controller;
+package com.example.CareerConnect.controller;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
