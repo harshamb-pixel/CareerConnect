@@ -189,4 +189,4 @@ This project is developed for educational purposes as part of a Full Stack devel
 
 ---
 
-*Built with ❤️ by **Konakanchi Kotesh***
+*Built with ❤️ by **Harsha***

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/layout :: head('Home')}"></head>
 <body>
@@ -12,4 +12,128 @@
 
     <footer th:replace="~{fragments/layout :: footer}"></footer>
 </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/layout :: head('Home')}"></head>
+
+<body>
+
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+
+    <div class="hero-content">
+
+        <h1>
+            Build Your Future with
+            <span>CareerConnect</span>
+        </h1>
+
+        <p>
+            Discover exciting career opportunities, connect with leading companies,
+            and take the next step toward your dream job.
+        </p>
+
+        <div class="hero-buttons">
+            <a th:href="@{/jobs}" class="btn btn-primary">
+                Explore Jobs
+            </a>
+
+            <a th:href="@{/register}" class="btn btn-secondary">
+                Get Started
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Statistics -->
+<section class="stats-section">
+
+    <div class="stat-card">
+        <h2>2500+</h2>
+        <p>Active Jobs</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>500+</h2>
+        <p>Companies</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>10,000+</h2>
+        <p>Candidates</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>98%</h2>
+        <p>Success Rate</p>
+    </div>
+
+</section>
+
+<!-- Why Choose -->
+<section class="features-section">
+
+    <h2>Why Choose CareerConnect?</h2>
+
+    <div class="features-grid">
+
+        <div class="feature-card">
+            <h3>💼 Find Your Dream Job</h3>
+            <p>
+                Browse thousands of verified opportunities from trusted employers.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>🏢 Top Companies</h3>
+            <p>
+                Connect with startups, MNCs, and leading organizations.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>⚡ Quick Applications</h3>
+            <p>
+                Apply to jobs easily with a simple and secure application process.
+            </p>
+        </div>
+
+        <div class="feature-card">
+            <h3>📈 Career Growth</h3>
+            <p>
+                Build your professional profile and unlock better opportunities.
+            </p>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Call To Action -->
+<section class="cta-section">
+
+    <h2>Ready to Start Your Career Journey?</h2>
+
+    <p>
+        Join thousands of professionals who are building their careers with CareerConnect.
+    </p>
+
+    <a th:href="@{/register}" class="btn btn-primary">
+        Join Now
+    </a>
+
+</section>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+
+</body>
+
 </html>
