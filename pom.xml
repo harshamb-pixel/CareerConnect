@@ -68,6 +68,13 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
+		<!-- Resend Email API -->
+		<dependency>
+    		<groupId>com.resend</groupId>
+    		<artifactId>resend-java</artifactId>
+    		<version>4.11.0</version>
+		</dependency>
+
 		<!-- Read .env file -->
 		<dependency>
     		<groupId>me.paulschwarz</groupId>
