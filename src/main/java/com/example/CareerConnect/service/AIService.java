@@ -1,6 +1,7 @@
 package com.example.CareerConnect.service;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
@@ -58,6 +59,7 @@ public class AIService {
                 - Do not invent skills, projects, experience, or qualifications.
                 - Treat the deterministic match score as provided.
                 - Give practical recommendations for a student.
+                - Focus recommendations primarily on the missing skills.
                 - Do not use Markdown.
                 - Do not use asterisks.
                 - Do not use hashtags.
@@ -78,17 +80,32 @@ public class AIService {
                 "stream", false
         );
 
-        Map<String, Object> response =
-                restTemplate.postForObject(
-                        "http://localhost:11434/api/generate",
-                        request,
-                        Map.class
-                );
+        try {
 
-        if (response == null || response.get("response") == null) {
-            return "No AI analysis was generated.";
+            Map<String, Object> response =
+                    restTemplate.postForObject(
+                            "http://localhost:11434/api/generate",
+                            request,
+                            Map.class
+                    );
+
+            if (response == null || response.get("response") == null) {
+                return "AI analysis could not be generated.";
+            }
+
+            return response.get("response").toString();
+
+        } catch (RestClientException exception) {
+
+            return """
+                    AI analysis is currently unavailable.
+
+                    Please make sure the local AI service is running
+                    and try again.
+
+                    Your resume match score and skill analysis are still
+                    available above.
+                    """;
         }
-
-        return response.get("response").toString();
     }
 }

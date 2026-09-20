@@ -41,7 +41,7 @@ public class AIController {
         this.aiService = aiService;
     }
 
-    @GetMapping("/student/ai/test/{jobId}")
+    @GetMapping("/student/ai/analyze/{jobId}")
     public String testResumeParser(
             @PathVariable Long jobId,
             Authentication authentication,
