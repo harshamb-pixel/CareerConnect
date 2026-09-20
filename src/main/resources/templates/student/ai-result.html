@@ -6,165 +6,329 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AI Resume Analysis</title>
+    <title>AI Resume Analysis | CareerConnect</title>
 
     <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background: #f5f7fb;
             margin: 0;
-            padding: 40px;
+            padding: 40px 20px;
+            color: #212529;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 950px;
             margin: auto;
         }
 
-        .header,
-        .card {
+        /* Header */
+
+        .header {
             background: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            text-align: center;
         }
 
         .header h1 {
-            margin-top: 0;
+            margin: 0 0 10px;
+            font-size: 30px;
+        }
+
+        .job-title {
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        /* Score */
+
+        .score-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eef4ff;
+            border: 8px solid #0d6efd;
         }
 
         .score {
-            font-size: 42px;
+            font-size: 30px;
             font-weight: bold;
-            margin-top: 15px;
+            color: #0d6efd;
+        }
+
+        .score-label {
+            color: #666;
+            margin: 0;
+        }
+
+        /* Cards */
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            margin-bottom: 22px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
         }
 
         .card h2 {
             margin-top: 0;
+            margin-bottom: 20px;
         }
 
-        ul {
-            padding-left: 25px;
+        /* Skills */
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 0;
+            margin: 0;
+            list-style: none;
         }
 
-        li {
-            margin: 10px 0;
+        .skill {
+            padding: 9px 14px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
         }
 
         .matched {
             color: #198754;
         }
 
+        .matched-skill {
+            background: #e9f7ef;
+            color: #198754;
+            border: 1px solid #b7e4c7;
+        }
+
         .missing {
             color: #dc3545;
         }
 
-        .ai-analysis {
-            line-height: 1.7;
-            white-space: pre-line;
+        .missing-skill {
+            background: #fff0f1;
+            color: #dc3545;
+            border: 1px solid #f1b0b7;
         }
+
+        /* AI Section */
+
+        .ai-card {
+            border-top: 5px solid #6f42c1;
+        }
+
+        .ai-title {
+            color: #6f42c1;
+        }
+
+        .ai-analysis {
+            line-height: 1.8;
+            white-space: pre-line;
+            color: #333;
+            font-size: 15px;
+        }
+
+        /* Info */
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #0d6efd;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 6px;
+            color: #555;
+            font-size: 14px;
+        }
+
+        /* Back Button */
 
         .back-button {
             display: inline-block;
-            padding: 12px 20px;
+            padding: 13px 22px;
             background: #0d6efd;
             color: white;
             text-decoration: none;
             border-radius: 8px;
+            font-weight: 500;
+            margin-top: 5px;
         }
 
         .back-button:hover {
             opacity: 0.9;
         }
+
+        /* Empty skills */
+
+        .empty-message {
+            color: #777;
+            font-style: italic;
+        }
+
+        /* Mobile */
+
+        @media (max-width: 600px) {
+
+            body {
+                padding: 20px 12px;
+            }
+
+            .header,
+            .card {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .score-circle {
+                width: 120px;
+                height: 120px;
+            }
+
+            .score {
+                font-size: 26px;
+            }
+        }
+
     </style>
 </head>
+
 
 <body>
 
 <div class="container">
 
     <!-- Header -->
+
     <div class="header">
 
-        <h1>AI Resume Analysis</h1>
+        <h1>🤖 AI Resume Analysis</h1>
 
-        <h2 th:text="${analysis.jobTitle}">
-            Job Title
+        <h2 class="job-title"
+            th:text="${analysis.jobTitle}">
+            Java Full Stack Developer
         </h2>
 
-        <div class="score">
+        <div class="score-circle">
 
-            <span th:text="${#numbers.formatDecimal(
-                    analysis.matchPercentage, 1, 2
-            ) + '%'}">
+            <span class="score"
+                  th:text="${#numbers.formatDecimal(
+                      analysis.matchPercentage, 1, 2
+                  ) + '%'}">
                 0%
             </span>
 
         </div>
 
-        <p>Resume Match Score</p>
+        <p class="score-label">
+            Resume Match Score
+        </p>
 
     </div>
 
 
     <!-- Matched Skills -->
+
     <div class="card">
 
         <h2 class="matched">
-            Matched Skills
+            ✓ Matched Skills
         </h2>
 
-        <ul>
+        <ul class="skills-list"
+            th:if="${!analysis.matchedSkills.isEmpty()}">
 
-            <li th:each="skill : ${analysis.matchedSkills}"
+            <li class="skill matched-skill"
+                th:each="skill : ${analysis.matchedSkills}"
                 th:text="${skill}">
                 Java
             </li>
 
         </ul>
 
+        <p class="empty-message"
+           th:if="${analysis.matchedSkills.isEmpty()}">
+            No matching skills found.
+        </p>
+
     </div>
 
 
     <!-- Missing Skills -->
+
     <div class="card">
 
         <h2 class="missing">
-            Missing Skills
+            ⚠ Missing Skills
         </h2>
 
-        <ul>
+        <ul class="skills-list"
+            th:if="${!analysis.missingSkills.isEmpty()}">
 
-            <li th:each="skill : ${analysis.missingSkills}"
+            <li class="skill missing-skill"
+                th:each="skill : ${analysis.missingSkills}"
                 th:text="${skill}">
                 Spring Boot
             </li>
 
         </ul>
 
+        <p class="empty-message"
+           th:if="${analysis.missingSkills.isEmpty()}">
+            No missing skills detected.
+        </p>
+
     </div>
 
 
-    <!-- AI Analysis -->
-    <div class="card">
+    <!-- AI Recommendations -->
 
-        <h2>
+    <div class="card ai-card">
+
+        <h2 class="ai-title">
             🤖 AI Recommendations
         </h2>
 
         <div class="ai-analysis"
-            th:utext="${aiAnalysis}">
+             th:text="${aiAnalysis}">
             AI analysis will appear here.
+        </div>
+
+        <div class="info-box">
+
+            💡 <strong>Note:</strong>
+            The match score is calculated using CareerConnect's
+            skill-matching system. The AI provides additional
+            recommendations based on your resume and the selected job.
+
         </div>
 
     </div>
 
 
     <!-- Back -->
+
     <a href="/student/dashboard"
        class="back-button">
-        Back to Dashboard
+
+        ← Back to Dashboard
+
     </a>
 
 </div>
