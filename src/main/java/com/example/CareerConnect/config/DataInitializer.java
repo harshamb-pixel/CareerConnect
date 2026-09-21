@@ -86,6 +86,13 @@ public class DataInitializer implements CommandLineRunner {
                 "employer@jobportal.com",
                 "ROLE_EMPLOYER"
         );
+        createUser(
+            "guest",
+            "Guest@123",
+            "Guest Student",
+            "guest@careerconnect.com",
+            "ROLE_STUDENT"
+        );
     }
 
     private void createUser(String username,

@@ -1,62 +1,258 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragments/layout :: head('Log In')}"></head>
+
 <body>
+
     <nav th:replace="~{fragments/layout :: navbar}"></nav>
-    
+
     <div class="container" style="max-width: 500px; margin-top: 4rem;">
         <div class="card">
-            <h2 style="margin-bottom: 1.5rem; text-align: center;">Welcome Back</h2>
-            
+
+            <h2 style="margin-bottom: 1.5rem; text-align: center;">
+                Welcome Back
+            </h2>
+
+            <!-- Login Error -->
             <div th:if="${param.error}" class="alert alert-error">
-                <span th:text="${session.SPRING_SECURITY_LAST_EXCEPTION != null ? session.SPRING_SECURITY_LAST_EXCEPTION.message : 'Invalid username or password.'}"></span>
+                <span th:text="${session.SPRING_SECURITY_LAST_EXCEPTION != null 
+                    ? session.SPRING_SECURITY_LAST_EXCEPTION.message 
+                    : 'Invalid username or password.'}">
+                </span>
             </div>
+
+            <!-- Logout Message -->
             <div th:if="${param.logout}" class="alert alert-success">
                 You have been logged out.
             </div>
+
+            <!-- Registration Success -->
             <div th:if="${param.success}" class="alert alert-success">
                 Registered successfully! Please log in.
             </div>
+
+            <!-- Password Reset Success -->
             <div th:if="${param.resetSuccess}" class="alert alert-success">
                 Password reset successfully! Please log in.
             </div>
-            
+
+            <!-- ========================= -->
+            <!-- Normal Login Form -->
+            <!-- ========================= -->
+
             <form th:action="@{/login}" method="post">
+
                 <div class="form-group">
                     <label>Username</label>
-                    <input type="text" name="username" class="form-control" required autofocus>
+
+                    <input
+                        type="text"
+                        name="username"
+                        class="form-control"
+                        required
+                        autofocus>
                 </div>
+
                 <div class="form-group">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-                        <label style="margin-bottom: 0;">Password</label>
-                        <a th:href="@{/forgot-password}" style="font-size: 0.85rem;">Forgot Password?</a>
+
+                    <div style="
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        margin-bottom: 0.5rem;
+                    ">
+
+                        <label style="margin-bottom: 0;">
+                            Password
+                        </label>
+
+                        <a
+                            th:href="@{/forgot-password}"
+                            style="font-size: 0.85rem;">
+                            Forgot Password?
+                        </a>
+
                     </div>
-                    <input type="password" id="loginPassword" name="password" class="form-control" required>
-                    <div style="margin-top: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-                        <input type="checkbox" id="showLoginPwd" onclick="document.getElementById('loginPassword').type = this.checked ? 'text' : 'password'">
-                        <label for="showLoginPwd" style="font-size: 0.85rem; color: var(--text-secondary); margin: 0; cursor: pointer;">Show Password</label>
+
+                    <input
+                        type="password"
+                        id="loginPassword"
+                        name="password"
+                        class="form-control"
+                        required>
+
+                    <!-- Show Password -->
+                    <div style="
+                        margin-top: 0.5rem;
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                    ">
+
+                        <input
+                            type="checkbox"
+                            id="showLoginPwd"
+                            onclick="
+                                document.getElementById('loginPassword').type =
+                                this.checked ? 'text' : 'password'
+                            ">
+
+                        <label
+                            for="showLoginPwd"
+                            style="
+                                font-size: 0.85rem;
+                                color: var(--text-secondary);
+                                margin: 0;
+                                cursor: pointer;
+                            ">
+                            Show Password
+                        </label>
+
                     </div>
+
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">Log In</button>
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    style="width: 100%;">
+                    Log In
+                </button>
+
             </form>
 
-            <div style="margin: 1.5rem 0; display: flex; align-items: center; gap: 1rem;">
-                <hr style="flex: 1; border: 0; border-top: 1px solid var(--border-color);">
-                <span style="color: var(--text-secondary); font-size: 0.9rem;">OR</span>
-                <hr style="flex: 1; border: 0; border-top: 1px solid var(--border-color);">
+
+            <!-- ========================= -->
+            <!-- Guest Account -->
+            <!-- ========================= -->
+
+            <div style="
+                margin-top: 1.5rem;
+                padding: 1.2rem;
+                border: 1px solid var(--border-color);
+                border-radius: 8px;
+                background: var(--bg-secondary);
+            ">
+
+                <h3 style="
+                    margin-bottom: 0.5rem;
+                    text-align: center;
+                ">
+                    👋 Want to explore CareerConnect?
+                </h3>
+
+                <p style="
+                    text-align: center;
+                    color: var(--text-secondary);
+                    margin-bottom: 1rem;
+                    font-size: 0.9rem;
+                ">
+                    Use the guest credentials to explore the Student features.
+                </p>
+
+                <div style="
+                    font-size: 0.9rem;
+                    line-height: 1.9;
+                    text-align: center;
+                ">
+
+                    <div>
+                        <strong>Username:</strong> guest
+                    </div>
+
+                    <div>
+                        <strong>Password:</strong> Guest@123
+                    </div>
+
+                </div>
+
             </div>
 
-            <a th:href="@{/oauth2/authorization/google}" class="btn" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 0.5rem; border: 1px solid var(--border-color); background: white; color: var(--text-primary);">
-                <img src="https://www.google.com/favicon.ico" width="16" height="16" alt="Google">
+
+            <!-- ========================= -->
+            <!-- OR -->
+            <!-- ========================= -->
+
+            <div style="
+                margin: 1.5rem 0;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+            ">
+
+                <hr style="
+                    flex: 1;
+                    border: 0;
+                    border-top: 1px solid var(--border-color);
+                ">
+
+                <span style="
+                    color: var(--text-secondary);
+                    font-size: 0.9rem;
+                ">
+                    OR
+                </span>
+
+                <hr style="
+                    flex: 1;
+                    border: 0;
+                    border-top: 1px solid var(--border-color);
+                ">
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- Google Login -->
+            <!-- ========================= -->
+
+            <a
+                th:href="@{/oauth2/authorization/google}"
+                class="btn"
+                style="
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 0.5rem;
+                    border: 1px solid var(--border-color);
+                    background: white;
+                    color: var(--text-primary);
+                ">
+
+                <img
+                    src="https://www.google.com/favicon.ico"
+                    width="16"
+                    height="16"
+                    alt="Google">
+
                 Continue with Google
+
             </a>
 
-            <p style="margin-top: 1.5rem; text-align: center; color: var(--text-secondary);">
-                Don't have an account? <a th:href="@{/register}">Sign up</a>
+
+            <!-- ========================= -->
+            <!-- Registration -->
+            <!-- ========================= -->
+
+            <p style="
+                margin-top: 1.5rem;
+                text-align: center;
+                color: var(--text-secondary);
+            ">
+
+                Don't have an account?
+
+                <a th:href="@{/register}">
+                    Sign up
+                </a>
+
             </p>
+
         </div>
     </div>
 
     <footer th:replace="~{fragments/layout :: footer}"></footer>
+
 </body>
 </html>
