@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head th:replace="~{fragments/layout :: head('Log In')}"></head>
 
 <body>
@@ -7,6 +8,7 @@
     <nav th:replace="~{fragments/layout :: navbar}"></nav>
 
     <div class="container" style="max-width: 500px; margin-top: 4rem;">
+
         <div class="card">
 
             <h2 style="margin-bottom: 1.5rem; text-align: center;">
@@ -15,8 +17,8 @@
 
             <!-- Login Error -->
             <div th:if="${param.error}" class="alert alert-error">
-                <span th:text="${session.SPRING_SECURITY_LAST_EXCEPTION != null 
-                    ? session.SPRING_SECURITY_LAST_EXCEPTION.message 
+                <span th:text="${session.SPRING_SECURITY_LAST_EXCEPTION != null
+                    ? session.SPRING_SECURITY_LAST_EXCEPTION.message
                     : 'Invalid username or password.'}">
                 </span>
             </div>
@@ -36,6 +38,7 @@
                 Password reset successfully! Please log in.
             </div>
 
+
             <!-- ========================= -->
             <!-- Normal Login Form -->
             <!-- ========================= -->
@@ -43,15 +46,19 @@
             <form th:action="@{/login}" method="post">
 
                 <div class="form-group">
+
                     <label>Username</label>
 
                     <input
                         type="text"
                         name="username"
                         class="form-control"
+                        placeholder="Enter username"
                         required
                         autofocus>
+
                 </div>
+
 
                 <div class="form-group">
 
@@ -74,14 +81,18 @@
 
                     </div>
 
+
                     <input
                         type="password"
                         id="loginPassword"
                         name="password"
                         class="form-control"
+                        placeholder="Enter password"
                         required>
 
+
                     <!-- Show Password -->
+
                     <div style="
                         margin-top: 0.5rem;
                         display: flex;
@@ -112,6 +123,7 @@
 
                 </div>
 
+
                 <button
                     type="submit"
                     class="btn btn-primary"
@@ -123,7 +135,7 @@
 
 
             <!-- ========================= -->
-            <!-- Guest Account -->
+            <!-- DEMO ACCOUNTS -->
             <!-- ========================= -->
 
             <div style="
@@ -135,33 +147,135 @@
             ">
 
                 <h3 style="
-                    margin-bottom: 0.5rem;
+                    margin-bottom: 0.4rem;
                     text-align: center;
                 ">
-                    👋 Want to explore CareerConnect?
+                    👋 Explore CareerConnect
                 </h3>
 
                 <p style="
                     text-align: center;
                     color: var(--text-secondary);
-                    margin-bottom: 1rem;
+                    margin-bottom: 1.2rem;
                     font-size: 0.9rem;
                 ">
-                    Use the guest credentials to explore the Student features.
+                    Use a demo account to explore different features.
                 </p>
 
+
+                <!-- ========================= -->
+                <!-- Student Demo -->
+                <!-- ========================= -->
+
                 <div style="
-                    font-size: 0.9rem;
-                    line-height: 1.9;
-                    text-align: center;
+                    padding: 1rem;
+                    margin-bottom: 0.8rem;
+                    border: 1px solid var(--border-color);
+                    border-radius: 6px;
+                    background: var(--bg-primary);
                 ">
 
-                    <div>
-                        <strong>Username:</strong> guest
+                    <div style="
+                        font-weight: 600;
+                        margin-bottom: 0.4rem;
+                    ">
+                        🎓 Student Demo
                     </div>
 
-                    <div>
-                        <strong>Password:</strong> Guest@123
+                    <div style="
+                        font-size: 0.9rem;
+                        line-height: 1.7;
+                    ">
+
+                        <div>
+                            <strong>Username:</strong> guest
+                        </div>
+
+                        <div>
+                            <strong>Password:</strong> Guest@123
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- Recruiter Demo -->
+                <!-- ========================= -->
+
+                <div style="
+                    padding: 1rem;
+                    margin-bottom: 0.8rem;
+                    border: 1px solid var(--border-color);
+                    border-radius: 6px;
+                    background: var(--bg-primary);
+                ">
+
+                    <div style="
+                        font-weight: 600;
+                        margin-bottom: 0.4rem;
+                    ">
+                        💼 Recruiter Demo
+                    </div>
+
+                    <div style="
+                        font-size: 0.9rem;
+                        line-height: 1.7;
+                    ">
+
+                        <div>
+                            <strong>Username:</strong> guest_recruiter
+                        </div>
+
+                        <div>
+                            <strong>Password:</strong> Demo@123
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ========================= -->
+                <!-- Demo Admin -->
+                <!-- ========================= -->
+
+                <div style="
+                    padding: 1rem;
+                    border: 1px solid var(--border-color);
+                    border-radius: 6px;
+                    background: var(--bg-primary);
+                ">
+
+                    <div style="
+                        font-weight: 600;
+                        margin-bottom: 0.4rem;
+                    ">
+                        🛠️ Admin Demo
+                    </div>
+
+                    <div style="
+                        font-size: 0.9rem;
+                        line-height: 1.7;
+                    ">
+
+                        <div>
+                            <strong>Username:</strong> guest_admin
+                        </div>
+
+                        <div>
+                            <strong>Password:</strong> Demo@123
+                        </div>
+
+                    </div>
+
+                    <div style="
+                        margin-top: 0.5rem;
+                        font-size: 0.78rem;
+                        color: var(--text-secondary);
+                    ">
+                        Read-only demo account
                     </div>
 
                 </div>
@@ -250,6 +364,7 @@
             </p>
 
         </div>
+
     </div>
 
     <footer th:replace="~{fragments/layout :: footer}"></footer>

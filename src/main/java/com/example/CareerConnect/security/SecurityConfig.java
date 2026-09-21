@@ -19,9 +19,8 @@ public class SecurityConfig {
      * DaoAuthenticationProvider internally — no manual provider setup needed.
      *
      * CustomUserDetailsService is annotated @Service so it is already a bean
-     * that implements UserDetailsService.  Spring Security picks it up automatically.
+     * that implements UserDetailsService. Spring Security picks it up automatically.
      */
-
 
     private final CustomOAuth2UserService customOAuth2UserService;
 
@@ -35,39 +34,84 @@ public class SecurityConfig {
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    public AuthenticationManager authenticationManager(
+            AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+
         http
             .csrf(csrf -> csrf.disable())
+
             .authorizeHttpRequests(auth -> auth
+
                 .requestMatchers(
-                    "/", "/register", "/login",
-                    "/forgot-password", "/reset-password",
-                    "/verify-otp", "/verify-reset-otp", "/resend-reset-otp",
+                    "/",
+                    "/register",
+                    "/login",
+                    "/forgot-password",
+                    "/reset-password",
+                    "/verify-otp",
+                    "/verify-reset-otp",
+                    "/resend-reset-otp",
                     "/no-role",
-                    "/css/**", "/js/**", "/images/**",
+                    "/css/**",
+                    "/js/**",
+                    "/images/**",
                     "/uploads/**"
                 ).permitAll()
-                // /dashboard is the role-dispatch hub — any authenticated user may hit it
-                .requestMatchers("/dashboard").hasAnyRole("STUDENT", "EMPLOYER", "ADMIN")
-                // Public job listing pages
-                .requestMatchers("/jobs", "/jobs/**").hasAnyRole("STUDENT", "EMPLOYER", "ADMIN")
-                .requestMatchers("/employer/**").hasRole("EMPLOYER")
-                .requestMatchers("/api/applications/**").hasAnyRole("EMPLOYER", "ADMIN")
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/student/**").hasRole("STUDENT")
+
+                // Dashboard — includes the read-only Demo Admin
+                .requestMatchers("/dashboard")
+                    .hasAnyRole(
+                        "STUDENT",
+                        "EMPLOYER",
+                        "ADMIN",
+                        "DEMO_ADMIN"
+                    )
+
+                // Job listing pages
+                .requestMatchers("/jobs", "/jobs/**")
+                    .hasAnyRole(
+                        "STUDENT",
+                        "EMPLOYER",
+                        "ADMIN",
+                        "DEMO_ADMIN"
+                    )
+
+                // Employer pages
+                .requestMatchers("/employer/**")
+                    .hasRole("EMPLOYER")
+
+                // Application APIs
+                .requestMatchers("/api/applications/**")
+                    .hasAnyRole("EMPLOYER", "ADMIN")
+
+                // Read-only Demo Admin pages
+                .requestMatchers("/demo-admin/**")
+                    .hasRole("DEMO_ADMIN")
+
+                // Real Admin pages — REAL ADMIN ONLY
+                .requestMatchers("/admin/**")
+                    .hasRole("ADMIN")
+
+                // Student pages
+                .requestMatchers("/student/**")
+                    .hasRole("STUDENT")
+
+                // Everything else requires authentication
                 .anyRequest().authenticated()
             )
+
             .formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/dashboard", true)
                 .permitAll()
             )
+
             .oauth2Login(oauth2 -> oauth2
                 .loginPage("/login")
                 .defaultSuccessUrl("/dashboard", true)

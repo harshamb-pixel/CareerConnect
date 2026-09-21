@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.CareerConnect.service.EmailService;
+
 import java.util.Random;
 import java.util.UUID;
 import java.time.LocalDateTime;
@@ -45,18 +46,25 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result, Model model) {
+    public String registerUser(
+            @Valid @ModelAttribute("user") User user,
+            BindingResult result,
+            Model model) {
+
         if (result.hasErrors()) {
             return "register";
         }
+
         if (userService.findByUsername(user.getUsername()) != null) {
             model.addAttribute("error", "Username already exists!");
             return "register";
         }
+
         if (userService.findByEmail(user.getEmail()) != null) {
             model.addAttribute("error", "Email already registered!");
             return "register";
         }
+
         // Generate OTP
         String otp = String.format("%06d", new Random().nextInt(999999));
         user.setOtp(otp);
@@ -68,10 +76,17 @@ public class AuthController {
 
         // Send OTP Email
         try {
-            emailService.sendEmail(user.getEmail(), "Your OTP Code - Job Portal", 
-                "Welcome to Job Portal! Your OTP for registration is: " + otp + "\nThis code will expire in 5 minutes.");
+            emailService.sendEmail(
+                    user.getEmail(),
+                    "Your OTP Code - Job Portal",
+                    "Welcome to Job Portal! Your OTP for registration is: "
+                            + otp + "\nThis code will expire in 5 minutes."
+            );
         } catch (Exception e) {
-            model.addAttribute("error", "Failed to send OTP email. Please ensure your SMTP settings are correct.");
+            model.addAttribute(
+                    "error",
+                    "Failed to send OTP email. Please ensure your SMTP settings are correct."
+            );
             return "register";
         }
 
@@ -79,17 +94,26 @@ public class AuthController {
     }
 
     @GetMapping("/verify-otp")
-    public String verifyOtpForm(@RequestParam(name = "email", required = false) String email, Model model) {
+    public String verifyOtpForm(
+            @RequestParam(name = "email", required = false) String email,
+            Model model) {
+
         if (email == null) {
             return "redirect:/login";
         }
+
         model.addAttribute("email", email);
         return "verify-otp";
     }
 
     @PostMapping("/verify-otp")
-    public String processVerifyOtp(@RequestParam("email") String email, @RequestParam("otp") String otp, Model model) {
+    public String processVerifyOtp(
+            @RequestParam("email") String email,
+            @RequestParam("otp") String otp,
+            Model model) {
+
         User user = userService.findByEmail(email);
+
         if (user == null) {
             model.addAttribute("error", "User not found.");
             model.addAttribute("email", email);
@@ -97,7 +121,7 @@ public class AuthController {
         }
 
         if (user.isEnabled()) {
-            return "redirect:/login?success"; // Already verified
+            return "redirect:/login?success";
         }
 
         if (user.getOtp() == null || !user.getOtp().equals(otp)) {
@@ -106,7 +130,9 @@ public class AuthController {
             return "verify-otp";
         }
 
-        if (user.getOtpExpiryTime() != null && LocalDateTime.now().isAfter(user.getOtpExpiryTime())) {
+        if (user.getOtpExpiryTime() != null
+                && LocalDateTime.now().isAfter(user.getOtpExpiryTime())) {
+
             model.addAttribute("error", "OTP has expired. Please register again.");
             model.addAttribute("email", email);
             return "verify-otp";
@@ -124,25 +150,38 @@ public class AuthController {
     @GetMapping("/dashboard")
     @SuppressWarnings("null")
     public String dashboard(Authentication authentication, Model model) {
+
         if (authentication == null || authentication.getAuthorities() == null) {
             return "redirect:/no-role";
         }
 
         String role = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
-                .findFirst().orElse("");
+                .findFirst()
+                .orElse("");
 
         if (role.isBlank()) {
-            model.addAttribute("errorMessage", "No role assigned to your account. Please contact the administrator.");
+            model.addAttribute(
+                    "errorMessage",
+                    "No role assigned to your account. Please contact the administrator."
+            );
             return "redirect:/no-role";
         }
 
         if (role.equals("ROLE_ADMIN")) {
             return "redirect:/admin/dashboard";
+
+        } else if (role.equals("ROLE_DEMO_ADMIN")) {
+            return "redirect:/demo-admin/dashboard";
+
         } else if (role.equals("ROLE_EMPLOYER")) {
             return "redirect:/employer/dashboard";
-        } else {
+
+        } else if (role.equals("ROLE_STUDENT")) {
             return "redirect:/student/dashboard";
+
+        } else {
+            return "redirect:/no-role";
         }
     }
 
@@ -150,8 +189,10 @@ public class AuthController {
     public String noRole(Model model) {
         model.addAttribute("statusCode", 403);
         model.addAttribute("errorTitle", "No Role Assigned");
-        model.addAttribute("errorMessage",
-            "Your account has no role assigned. Please contact the administrator or re-register.");
+        model.addAttribute(
+                "errorMessage",
+                "Your account has no role assigned. Please contact the administrator or re-register."
+        );
         return "error";
     }
 
@@ -161,10 +202,17 @@ public class AuthController {
     }
 
     @PostMapping("/forgot-password")
-    public String processForgotPassword(@RequestParam("email") String email, Model model) {
+    public String processForgotPassword(
+            @RequestParam("email") String email,
+            Model model) {
+
         User user = userService.findByEmail(email);
+
         if (user == null) {
-            model.addAttribute("error", "No account found with that email address.");
+            model.addAttribute(
+                    "error",
+                    "No account found with that email address."
+            );
             return "forgot-password";
         }
 
@@ -174,12 +222,20 @@ public class AuthController {
         user.setOtpExpiryTime(LocalDateTime.now().plusMinutes(10));
         userService.updateUser(user);
 
-        System.out.println("DEBUG: Password Reset OTP for " + user.getEmail() + " is " + otp);
+        System.out.println(
+                "DEBUG: Password Reset OTP for "
+                        + user.getEmail()
+                        + " is "
+                        + otp
+        );
 
         try {
             emailService.sendOtpEmail(user.getEmail(), otp);
         } catch (Exception e) {
-            model.addAttribute("error", "Failed to send OTP email. Please ensure your SMTP settings in application.properties are correct.");
+            model.addAttribute(
+                    "error",
+                    "Failed to send OTP email. Please ensure your SMTP settings in application.properties are correct."
+            );
             return "forgot-password";
         }
 
@@ -187,24 +243,38 @@ public class AuthController {
     }
 
     @GetMapping("/verify-reset-otp")
-    public String verifyResetOtpForm(@RequestParam("email") String email, Model model) {
+    public String verifyResetOtpForm(
+            @RequestParam("email") String email,
+            Model model) {
+
         model.addAttribute("email", email);
         return "verify-reset-otp";
     }
 
     @PostMapping("/verify-reset-otp")
-    public String processVerifyResetOtp(@RequestParam("email") String email, 
-                                       @RequestParam("otp") String otp, 
-                                       Model model) {
+    public String processVerifyResetOtp(
+            @RequestParam("email") String email,
+            @RequestParam("otp") String otp,
+            Model model) {
+
         User user = userService.findByEmail(email);
-        if (user == null || user.getOtp() == null || !user.getOtp().equals(otp.trim())) {
+
+        if (user == null
+                || user.getOtp() == null
+                || !user.getOtp().equals(otp.trim())) {
+
             model.addAttribute("error", "Invalid OTP.");
             model.addAttribute("email", email);
             return "verify-reset-otp";
         }
 
-        if (user.getOtpExpiryTime() != null && LocalDateTime.now().isAfter(user.getOtpExpiryTime())) {
-            model.addAttribute("error", "OTP has expired. Please click 'Resend OTP'.");
+        if (user.getOtpExpiryTime() != null
+                && LocalDateTime.now().isAfter(user.getOtpExpiryTime())) {
+
+            model.addAttribute(
+                    "error",
+                    "OTP has expired. Please click 'Resend OTP'."
+            );
             model.addAttribute("email", email);
             return "verify-reset-otp";
         }
@@ -218,8 +288,12 @@ public class AuthController {
     }
 
     @GetMapping("/resend-reset-otp")
-    public String resendResetOtp(@RequestParam("email") String email, Model model) {
+    public String resendResetOtp(
+            @RequestParam("email") String email,
+            Model model) {
+
         User user = userService.findByEmail(email);
+
         if (user == null) {
             return "redirect:/forgot-password?error";
         }
@@ -230,45 +304,68 @@ public class AuthController {
         user.setOtpExpiryTime(LocalDateTime.now().plusMinutes(10));
         userService.updateUser(user);
 
-        System.out.println("DEBUG: Resent Password Reset OTP for " + user.getEmail() + " is " + otp);
+        System.out.println(
+                "DEBUG: Resent Password Reset OTP for "
+                        + user.getEmail()
+                        + " is "
+                        + otp
+        );
 
         try {
             emailService.sendOtpEmail(user.getEmail(), otp);
         } catch (Exception e) {
-            return "redirect:/verify-reset-otp?email=" + email + "&error=Failed+to+resend+email";
+            return "redirect:/verify-reset-otp?email="
+                    + email
+                    + "&error=Failed+to+resend+email";
         }
 
-        return "redirect:/verify-reset-otp?email=" + email + "&success=New+OTP+sent";
+        return "redirect:/verify-reset-otp?email="
+                + email
+                + "&success=New+OTP+sent";
     }
 
     @GetMapping("/reset-password")
-    public String resetPasswordForm(@RequestParam("token") String token, Model model) {
+    public String resetPasswordForm(
+            @RequestParam("token") String token,
+            Model model) {
+
         User user = userService.findByResetToken(token);
+
         if (user == null) {
-            model.addAttribute("error", "Invalid session. Please request a new OTP.");
+            model.addAttribute(
+                    "error",
+                    "Invalid session. Please request a new OTP."
+            );
             return "forgot-password";
         }
+
         model.addAttribute("token", token);
         return "reset-password";
     }
 
     @PostMapping("/reset-password")
-    public String processResetPassword(@RequestParam("token") String token,
-                                       @RequestParam("newPassword") String newPassword,
-                                       Model model) {
+    public String processResetPassword(
+            @RequestParam("token") String token,
+            @RequestParam("newPassword") String newPassword,
+            Model model) {
+
         User user = userService.findByResetToken(token);
+
         if (user == null) {
             model.addAttribute("error", "Invalid session.");
             return "forgot-password";
         }
 
         userService.updatePassword(user, newPassword);
-        
+
         // Send confirmation email
         try {
             emailService.sendPasswordResetConfirmationEmail(user.getEmail());
         } catch (Exception e) {
-            System.err.println("Failed to send reset confirmation email: " + e.getMessage());
+            System.err.println(
+                    "Failed to send reset confirmation email: "
+                            + e.getMessage()
+            );
         }
 
         // Clear OTP and token after success
@@ -280,5 +377,4 @@ public class AuthController {
         // Redirect to login page with success message
         return "redirect:/login?resetSuccess";
     }
-
 }
