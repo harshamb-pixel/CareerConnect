@@ -32,6 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
-#Environment variables#
+# Environment variables #
 .env
+
+# Uploaded files #
 uploads/
