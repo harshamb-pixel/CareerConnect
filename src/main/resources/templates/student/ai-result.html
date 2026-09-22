@@ -2,27 +2,170 @@
 <html lang="en"
       xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head th:replace="~{fragments/layout :: head('AI Resume Analysis')}"></head>
 
-    <title>AI Resume Analysis | CareerConnect</title>
+<body>
+
+    <!-- CareerConnect Navbar -->
+    <nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+
+    <!-- AI Resume Analysis -->
+    <div class="ai-page">
+
+        <div class="ai-container">
+
+            <!-- ========================= -->
+            <!-- Header / Match Score -->
+            <!-- ========================= -->
+
+            <div class="header">
+
+                <h1>🤖 AI Resume Analysis</h1>
+
+                <h2 class="job-title"
+                    th:text="${analysis.jobTitle}">
+                    Java Full Stack Developer
+                </h2>
+
+                <div class="score-circle">
+
+                    <span class="score"
+                          th:text="${#numbers.formatDecimal(
+                              analysis.matchPercentage, 1, 2
+                          ) + '%'}">
+                        0%
+                    </span>
+
+                </div>
+
+                <p class="score-label">
+                    Resume Match Score
+                </p>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- Matched Skills -->
+            <!-- ========================= -->
+
+            <div class="card">
+
+                <h2 class="matched">
+                    ✓ Matched Skills
+                </h2>
+
+                <ul class="skills-list"
+                    th:if="${!analysis.matchedSkills.isEmpty()}">
+
+                    <li class="skill matched-skill"
+                        th:each="skill : ${analysis.matchedSkills}"
+                        th:text="${skill}">
+                        Java
+                    </li>
+
+                </ul>
+
+                <p class="empty-message"
+                   th:if="${analysis.matchedSkills.isEmpty()}">
+                    No matching skills found.
+                </p>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- Missing Skills -->
+            <!-- ========================= -->
+
+            <div class="card">
+
+                <h2 class="missing">
+                    ⚠ Missing Skills
+                </h2>
+
+                <ul class="skills-list"
+                    th:if="${!analysis.missingSkills.isEmpty()}">
+
+                    <li class="skill missing-skill"
+                        th:each="skill : ${analysis.missingSkills}"
+                        th:text="${skill}">
+                        Spring Boot
+                    </li>
+
+                </ul>
+
+                <p class="empty-message"
+                   th:if="${analysis.missingSkills.isEmpty()}">
+                    No missing skills detected.
+                </p>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- AI Recommendations -->
+            <!-- ========================= -->
+
+            <div class="card ai-card">
+
+                <h2 class="ai-title">
+                    🤖 AI Recommendations
+                </h2>
+
+                <div class="ai-analysis"
+                     th:text="${aiAnalysis}">
+                    AI analysis will appear here.
+                </div>
+
+                <div class="info-box">
+
+                    💡 <strong>Note:</strong>
+                    The match score is calculated using
+                    CareerConnect's skill-matching system.
+                    The AI provides additional recommendations
+                    based on your resume and the selected job.
+
+                </div>
+
+            </div>
+
+
+            <!-- ========================= -->
+            <!-- Back Button -->
+            <!-- ========================= -->
+
+            <a th:href="@{/student/dashboard}"
+               class="back-button">
+
+                ← Back to Dashboard
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- CareerConnect Footer -->
+    <footer th:replace="~{fragments/layout :: footer}"></footer>
+
+
+    <!-- ========================= -->
+    <!-- AI Page Styling -->
+    <!-- ========================= -->
 
     <style>
 
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
+        .ai-page {
             background: #f5f7fb;
-            margin: 0;
+            min-height: calc(100vh - 70px);
             padding: 40px 20px;
             color: #212529;
         }
 
-        .container {
+        .ai-container {
             max-width: 950px;
             margin: auto;
         }
@@ -183,7 +326,7 @@
 
         @media (max-width: 600px) {
 
-            body {
+            .ai-page {
                 padding: 20px 12px;
             }
 
@@ -204,136 +347,11 @@
             .score {
                 font-size: 26px;
             }
+
         }
 
     </style>
-</head>
 
-
-<body>
-<nav th:replace="~{fragments/layout :: navbar}"></nav>
-
-<div class="container">
-
-    <!-- Header -->
-
-    <div class="header">
-
-        <h1>🤖 AI Resume Analysis</h1>
-
-        <h2 class="job-title"
-            th:text="${analysis.jobTitle}">
-            Java Full Stack Developer
-        </h2>
-
-        <div class="score-circle">
-
-            <span class="score"
-                  th:text="${#numbers.formatDecimal(
-                      analysis.matchPercentage, 1, 2
-                  ) + '%'}">
-                0%
-            </span>
-
-        </div>
-
-        <p class="score-label">
-            Resume Match Score
-        </p>
-
-    </div>
-
-
-    <!-- Matched Skills -->
-
-    <div class="card">
-
-        <h2 class="matched">
-            ✓ Matched Skills
-        </h2>
-
-        <ul class="skills-list"
-            th:if="${!analysis.matchedSkills.isEmpty()}">
-
-            <li class="skill matched-skill"
-                th:each="skill : ${analysis.matchedSkills}"
-                th:text="${skill}">
-                Java
-            </li>
-
-        </ul>
-
-        <p class="empty-message"
-           th:if="${analysis.matchedSkills.isEmpty()}">
-            No matching skills found.
-        </p>
-
-    </div>
-
-
-    <!-- Missing Skills -->
-
-    <div class="card">
-
-        <h2 class="missing">
-            ⚠ Missing Skills
-        </h2>
-
-        <ul class="skills-list"
-            th:if="${!analysis.missingSkills.isEmpty()}">
-
-            <li class="skill missing-skill"
-                th:each="skill : ${analysis.missingSkills}"
-                th:text="${skill}">
-                Spring Boot
-            </li>
-
-        </ul>
-
-        <p class="empty-message"
-           th:if="${analysis.missingSkills.isEmpty()}">
-            No missing skills detected.
-        </p>
-
-    </div>
-
-
-    <!-- AI Recommendations -->
-
-    <div class="card ai-card">
-
-        <h2 class="ai-title">
-            🤖 AI Recommendations
-        </h2>
-
-        <div class="ai-analysis"
-             th:text="${aiAnalysis}">
-            AI analysis will appear here.
-        </div>
-
-        <div class="info-box">
-
-            💡 <strong>Note:</strong>
-            The match score is calculated using CareerConnect's
-            skill-matching system. The AI provides additional
-            recommendations based on your resume and the selected job.
-
-        </div>
-
-    </div>
-
-
-    <!-- Back -->
-
-    <a href="/student/dashboard"
-       class="back-button">
-
-        ← Back to Dashboard
-
-    </a>
-
-</div>
-<footer th:replace="~{fragments/layout :: footer}"></footer>
 </body>
 
 </html>
